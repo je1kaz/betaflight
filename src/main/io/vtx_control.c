@@ -107,9 +107,9 @@ void vtxDecrementChannel(void)
 
 void vtxUpdateActivatedChannel(void)
 {
-    if (ARMING_FLAG(ARMED)) {
-        locked = 1;
-    }
+    //if (ARMING_FLAG(ARMED)) {
+    //    locked = 1;
+    //}
 
     if (vtxCommonDevice()) {
         // Apply every active activation condition, like updateActivatedModes() does for mode
