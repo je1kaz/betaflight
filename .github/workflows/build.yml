@@ -1,0 +1,28 @@
+name: Build Firmware
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Назва плати'
+        required: true
+        default: 'GEPRCF745_BT_HD'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Compile firmware
+        run: |
+          docker run --rm -u $(id -u):$(id -g) -v "$PWD":/src betaflight/betaflight-build:arm sh -c "make configs && make CONFIG=${{ github.event.inputs.target }}"
+
+      - name: Upload hex artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: betaflight-${{ github.event.inputs.target }}
+          path: obj/*.hex
