@@ -15,6 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: 4.5-maintenance
           submodules: recursive
 
       - name: Compile firmware
