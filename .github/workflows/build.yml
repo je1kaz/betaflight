@@ -12,11 +12,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout official Betaflight repository
         uses: actions/checkout@v4
         with:
+          repository: betaflight/betaflight
           ref: 4.5-maintenance
           submodules: recursive
+
+      - name: Patch VTX lock
+        run: |
+          sed -i 's/locked = 1;/\/\/ locked = 1;/g' src/main/io/vtx_control.c
 
       - name: Compile firmware
         run: |
@@ -25,5 +30,5 @@ jobs:
       - name: Upload hex artifact
         uses: actions/upload-artifact@v4
         with:
-          name: betaflight-${{ github.event.inputs.target }}
+          name: betaflight-${{ github.event.inputs.target }}-4.5.1
           path: obj/*.hex
