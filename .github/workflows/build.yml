@@ -19,9 +19,10 @@ jobs:
           ref: 4.5-maintenance
           submodules: recursive
 
-      - name: Patch VTX lock
+      - name: Patch VTX lock and GCC version check
         run: |
           sed -i 's/locked = 1;/\/\/ locked = 1;/g' src/main/io/vtx_control.c
+          echo "GCC_REQUIRED_VERSION = 13.3.1" > mk/local.mk
 
       - name: Compile firmware
         run: |
