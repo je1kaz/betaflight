@@ -25,7 +25,7 @@ jobs:
 
       - name: Compile firmware
         run: |
-          docker run --rm -u $(id -u):$(id -g) -v "$PWD":/src betaflight/betaflight-build:arm sh -c "make configs && make CONFIG=${{ github.event.inputs.target }}"
+          docker run --rm -u $(id -u):$(id -g) -v "$PWD":/src betaflight/betaflight-build:arm bash -c 'export PATH=$(find /opt/betaflight/tools -type d -name bin 2>/dev/null | tr "\n" ":"):$PATH && make configs && make CONFIG=${{ github.event.inputs.target }}'
 
       - name: Upload hex artifact
         uses: actions/upload-artifact@v4
